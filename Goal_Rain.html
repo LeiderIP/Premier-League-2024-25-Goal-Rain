@@ -74,10 +74,17 @@ header p{font-size:.78rem;color:var(--text-sec);letter-spacing:.18em;margin-top:
 /* ── Stage ── */
 .stage-wrap{display:flex;gap:36px;flex-wrap:wrap;justify-content:center;
              align-items:flex-start;max-width:1100px;width:100%;padding:18px 20px 10px}
-.rain-stage{position:relative;width:540px;max-width:100%;aspect-ratio:700/520;
+.rain-stage{position:relative;width:540px;max-width:100%;aspect-ratio:700/650;
              border-radius:14px;overflow:hidden;border:1px solid var(--border);
              box-shadow:0 0 40px rgba(79,209,255,0.08)}
 .rain-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ambient-streak{animation:ambientFall linear infinite}
+@keyframes ambientFall{
+  0%   { transform:translateY(-30px); opacity:0; }
+  10%  { opacity:.35; }
+  90%  { opacity:.35; }
+  100% { transform:translateY(160px); opacity:0; }
+}
 #drop-layer{position:absolute;inset:0}
 .drop{position:absolute;width:7px;height:13px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
        transform:translate(-50%,-50%) rotate(180deg);pointer-events:none;will-change:top}
@@ -130,18 +137,57 @@ footer{margin:18px 0 26px;font-size:.68rem;color:var(--text-sec);
 
 <div class="stage-wrap">
   <div class="rain-stage">
-    <svg viewBox="0 0 700 520" xmlns="http://www.w3.org/2000/svg">
-      <rect width="700" height="520" fill="var(--pitch-bg)" id="pitch-rect"/>
-      <rect x="20" y="20" width="660" height="460" fill="none"
+    <svg viewBox="0 0 700 650" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#070a14"/>
+          <stop offset="100%" stop-color="#1c2840"/>
+        </linearGradient>
+        <radialGradient id="flood-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#cfe8ff" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#cfe8ff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ── Sky ── -->
+      <rect x="0" y="0" width="700" height="135" fill="url(#sky-grad)" id="sky-rect"/>
+      <circle cx="70" cy="38" r="46" fill="url(#flood-glow)"/>
+      <circle cx="630" cy="38" r="46" fill="url(#flood-glow)"/>
+      <circle cx="70" cy="38" r="5" fill="#eaf6ff" fill-opacity="0.9"/>
+      <circle cx="630" cy="38" r="5" fill="#eaf6ff" fill-opacity="0.9"/>
+      <g stroke="#9fd4ff" stroke-opacity="0.4" stroke-width="1.5" stroke-linecap="round">
+        <line class="ambient-streak" x1="40" y1="0" x2="34" y2="22" style="animation-duration:1.8s;animation-delay:0s"/>
+        <line class="ambient-streak" x1="110" y1="0" x2="104" y2="22" style="animation-duration:2.2s;animation-delay:.4s"/>
+        <line class="ambient-streak" x1="180" y1="0" x2="174" y2="22" style="animation-duration:1.6s;animation-delay:.9s"/>
+        <line class="ambient-streak" x1="250" y1="0" x2="244" y2="22" style="animation-duration:2.4s;animation-delay:.2s"/>
+        <line class="ambient-streak" x1="320" y1="0" x2="314" y2="22" style="animation-duration:1.9s;animation-delay:1.1s"/>
+        <line class="ambient-streak" x1="390" y1="0" x2="384" y2="22" style="animation-duration:2.1s;animation-delay:.6s"/>
+        <line class="ambient-streak" x1="460" y1="0" x2="454" y2="22" style="animation-duration:1.7s;animation-delay:1.3s"/>
+        <line class="ambient-streak" x1="530" y1="0" x2="524" y2="22" style="animation-duration:2.3s;animation-delay:.1s"/>
+        <line class="ambient-streak" x1="600" y1="0" x2="594" y2="22" style="animation-duration:1.8s;animation-delay:.8s"/>
+        <line class="ambient-streak" x1="660" y1="0" x2="654" y2="22" style="animation-duration:2.0s;animation-delay:1.5s"/>
+      </g>
+
+      <!-- ── Pitch ── -->
+      <rect x="0" y="130" width="700" height="520" fill="var(--pitch-bg)" id="pitch-rect"/>
+      <rect x="20" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="130" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="240" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="350" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="460" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="570" y="150" width="55" height="460" fill="#fff" fill-opacity="0.025"/>
+      <rect x="20" y="150" width="660" height="460" fill="none"
             stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-      <rect x="168" y="342" width="364" height="138" fill="none"
+      <rect x="168" y="472" width="364" height="138" fill="none"
             stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
-      <rect x="267" y="434" width="166" height="46" fill="none"
+      <rect x="267" y="564" width="166" height="46" fill="none"
             stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
-      <circle cx="350" cy="388" r="2.5" fill="rgba(255,255,255,0.6)"/>
-      <path d="M 289 342 A 77 77 0 0 1 411 342" fill="none"
+      <circle cx="350" cy="518" r="2.5" fill="rgba(255,255,255,0.6)"/>
+      <path d="M 289 472 A 77 77 0 0 1 411 472" fill="none"
             stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-      <rect x="305" y="12" width="90" height="10" fill="rgba(255,255,255,0.85)"/>
+      <path d="M 20 150 A 14 14 0 0 1 34 164" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <path d="M 680 150 A 14 14 0 0 0 666 164" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <rect x="305" y="605" width="90" height="9" fill="rgba(255,255,255,0.9)"/>
       <g id="splash-layer"></g>
       <g id="landed-layer"></g>
     </svg>
@@ -187,7 +233,7 @@ let timer = null;
 const teamCounts = {};
 const landedDots = []; // {el, team}
 
-const PAD=20, GOAL_Y=480, MAP_H=460, MAX_DIST=60, FULL_W=660;
+const PAD=20, GOAL_Y=610, MAP_H=460, MAX_DIST=60, FULL_W=660, CANVAS_W=700, CANVAS_H=650;
 function xScale(y80){ return PAD + (y80/80)*FULL_W; }
 function yScale(dist){ return GOAL_Y - (Math.min(dist,MAX_DIST)/MAX_DIST)*MAP_H; }
 
@@ -224,19 +270,19 @@ function spawnNext() {
   if (idx >= GOALS.length) { pause(); return; }
   const g = GOALS[idx];
   const cx = xScale(g.y), cy = yScale(120 - g.x);
-  const leftPct = (cx/700*100), topPct = (cy/520*100);
+  const leftPct = (cx/CANVAS_W*100), topPct = (cy/CANVAS_H*100);
   const color = dropColor(g.team);
 
   const drop = document.createElement('div');
   drop.className = 'drop';
   drop.style.left = leftPct + '%';
-  drop.style.top = '-6%';
+  drop.style.top = '0%';
   drop.style.background = color;
   drop.style.boxShadow = `0 0 9px 2px ${color}`;
   document.getElementById('drop-layer').appendChild(drop);
 
   requestAnimationFrame(() => {
-    drop.style.transition = `top 550ms cubic-bezier(.45,0,.7,1), left 550ms linear`;
+    drop.style.transition = `top 680ms cubic-bezier(.45,0,.7,1), left 680ms linear`;
     drop.style.top = topPct + '%';
   });
 
@@ -245,7 +291,7 @@ function spawnNext() {
     land(cx, cy, color, g.team);
   };
   drop.addEventListener('transitionend', onLand, {once:true});
-  setTimeout(onLand, 700); // safety net in case transitionend doesn't fire
+  setTimeout(onLand, 820); // safety net in case transitionend doesn't fire
 
   teamCounts[g.team] = (teamCounts[g.team] || 0) + 1;
   updateInfoCard(g);
